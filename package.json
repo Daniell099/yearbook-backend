@@ -1,21 +1,24 @@
 {
-  "name": "yearbook-backend",
+  "name": "26webm-yearbook-backend",
   "version": "1.0.0",
-  "description": "API REST do Yearbook Digital — IFNMG Salinas 2026",
+  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Daniell099/yearbook-backend.git"
+    "url": "git@arthurfporto.github.com:arthurfporto/26webm-yearbook-backend"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Daniell099/yearbook-backend/issues"
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "express": "^5.2.1"
   },
-  "homepage": "https://github.com/Daniell099/yearbook-backend#readme"
+  "devDependencies": {
+    "prisma": "^6.19.3"
+  }
 }
