@@ -1,0 +1,23 @@
+info:
+  name: Mensagem
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: https://legendary-system-pjxp5xjq9pj9f6j5q-3000.app.github.dev/mensagens
+  body:
+    type: json
+    data: |-
+      {
+        "texto": "Salve, turma! Último ano!",
+        "autorId": 3
+
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

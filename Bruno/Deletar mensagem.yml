@@ -1,0 +1,15 @@
+info:
+  name: Deletar mensagem
+  type: http
+  seq: 7
+
+http:
+  method: DELETE
+  url: https://fantastic-disco-r4jrqgwvxw4x2xxwx-3000.app.github.dev/mensagem
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
