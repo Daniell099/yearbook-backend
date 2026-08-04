@@ -1,10 +1,13 @@
+import 'dotenv/config';
 import express from 'express';
 import logger from './middlewares/logger.js';                  // importa o Express
 import alunosRouter from './routes/alunos.js'; // importa o router de alunos <- NOVO
 import mensagensRouter from './routes/mensagens.js';
+import tratarErro from "./middlewares/erro.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // usa a porta do .env ou 3000 como padrão
+
 
 app.use(express.json());    // 1º — parseia JSON do body
 app.use(logger);            // 2º — registra log de cada requisição
@@ -26,5 +29,6 @@ if (process.env.VERCEL !== '1') {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
   });
 }
+app.use(tratarErro);
 
 export default app;

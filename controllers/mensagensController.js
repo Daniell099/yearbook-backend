@@ -21,58 +21,38 @@ export async function listarMensagens(req, res) {
 // 🎯 POST /mensagens — cria uma nova mensagem
 // Siga o mesmo padrão do criarAluno
 // Valide que texto não está vazio (400 se faltar)
-export async function criarMensagem(req, res) {
+export async function criarMensagem(req, res, next) {
   try {
-    // 1. Extraia texto, imagemUrl e autorId de req.body
     const { texto, imagemUrl, autorId } = req.body;
 
-    // 2. Valide: se texto não existir, retorne 400
-    if (!texto || texto.trim() === "") {
-      return res.status(400).json({ erro: "O campo texto é obrigatório." });
+    if (!texto) {
+      return res.status(400).json({ erro: "O campo texto é obrigatório" });
     }
 
-    // 3. Crie com prisma.mensagem.create()
-    const mensagemCriada = await prisma.mensagem.create({
+    const novaMensagem = await prisma.mensagem.create({
       data: {
         texto,
         imagemUrl,
-        // Garantindo que o autorId vá como número para o Prisma
-        autorId: Number(autorId) 
-      }
+        autorId: Number(autorId),
+      },
     });
-
-    // 4. Retorne 201 com a mensagem criada
-    return res.status(201).json(mensagemCriada);
-
-  } catch (error) {
-    // Tratamento de erro caso ocorra algum problema no banco (ex: autorId não existe)
-    return res.status(500).json({ error: "Erro ao criar a mensagem." });
+    res.status(201).json(novaMensagem);
+  } catch (erro) {
+    next(erro);
   }
 }
 
+
 // 🎯 DELETE /mensagens/:id — deleta uma mensagem
 // Siga o mesmo padrão do deletarAluno
-export async function deletarMensagem(req, res) {
+export async function deletarMensagem(req, res, next) {
+  const { id } = req.params;
   try {
-    // 1. Extrai o ID dos parâmetros da requisição
-    const { id } = req.params;
-
-    // 2. Executa a lógica de deleção (Adapte para o seu ORM/Banco, ex: Mensagem.delete, MensagemService.delete, etc.)
-    // Se o seu ID for numérico no banco, lembre-se de converter: Number(id)
     await prisma.mensagem.delete({
-      where: { id: Number(id) } 
+      where: { id: Number(id) },
     });
-
-    // 4. Sucesso: Retorna status 204 (No Content) sem corpo
-    return res.status(204).send();
-
-  } catch (error) {
-    if (error.code === 'P2025') {
-      return res.status(404).json({ erro: "Mensagem não encontrada." });
-    }
-
-    // Tratamento de erro interno do servidor
-    console.error("Erro ao deletar mensagem:", error);
-    return res.status(500).json({ erro: "Erro interno do servidor." });
+    res.status(204).end();
+  } catch (erro) {
+    next(erro);
   }
 }
