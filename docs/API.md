@@ -1,3 +1,4 @@
+## CORS
 # API do Yearbook Digital
 
 Base URL: `http://localhost:3000` (desenvolvimento)
